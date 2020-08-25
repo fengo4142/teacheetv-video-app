@@ -1,9 +1,11 @@
 <template>
    <div class="fill-height">
     <v-container class="px-5 h-100">
+      <v-layout class="flex-start">
+        <v-btn icon @click="backToHome()"><v-icon color="blue">mdi-arrow-left</v-icon></v-btn>
+      </v-layout>
       <v-layout class="p-5 my-12 border-black justify-center">
         <v-card>
-
             <div class="canvas-holder">
                 <div class="silhouette"></div>
                 <video hidden id="webcam" width="640" height="480"></video>
@@ -15,10 +17,10 @@
               <v-spacer></v-spacer>
 
               <v-btn icon outlined v-show="!isPlaying" @click="toggle">
-                <v-icon color="blue">mdi-play</v-icon>
+                <v-icon color="blue">mdi-pause</v-icon>
               </v-btn>
               <v-btn icon outlined v-show="isPlaying" @click="toggle">
-                <v-icon color="blue">mdi-pause</v-icon>
+                <v-icon color="blue">mdi-play</v-icon>
               </v-btn>
             </v-card-actions>
         </v-card>
@@ -48,6 +50,7 @@
 
 import axios from '../plugin/axios';
 import StreamUtil from '../utils/streamUtil';
+import { COMMENTS_URL } from '../utils/constants';
 
 export default {
   name: 'Call',
@@ -65,16 +68,19 @@ export default {
         this.stream.stop()
       }
       else {
-        this.stream =new StreamUtil("webcam", "canvas");
         this.stream.init()
       }
+    },
+    backToHome() {
+      this.stream.stop()
+      this.$router.push('/')
     }
   },
 
   mounted() {
     this.stream = new StreamUtil("webcam", "canvas");
     
-    axios.get('https://jsonplaceholder.typicode.com/comments').then(response => {
+    axios.get(COMMENTS_URL).then(response => {
       this.comments = response.data;
       this.stream.init()
     })
@@ -83,5 +89,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .videoFeed {
+    background: #000;
+  }
 </style>

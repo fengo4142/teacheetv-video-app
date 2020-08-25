@@ -62,11 +62,14 @@ export default class StreamUtil {
   stop() {
     clearInterval(this.scanTimer);
 
-    if (this.webcam) {
+    if (this.webcamVideoElement) {
       this.webcamVideoElement.pause();
       this.webcamVideoElement.srcObject = null;
     }
     this.streaming = false;
     this.stream.getVideoTracks()[0].stop();
+
+    const canvas = document.getElementById(this.canvasId); // get the canvas from the page
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);    
   }
 }

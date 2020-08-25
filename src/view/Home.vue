@@ -5,12 +5,13 @@
         <v-flex text-xs-center class="d-flex">
           <div class="home__container-headline title-header">Teachee TV</div>
           <v-spacer />
+          <div class="home__container-contact">rolandsong328@gmail.com</div>
         </v-flex>
       </v-layout>
 
       <v-divider class="my-5" />
       <v-layout class="justify-center home__container-main flex-column">
-        <v-btn class="col-3 mx-auto" to="/call">JOIN</v-btn>
+        <v-btn class="col-3 mx-auto primary" to="/call">JOIN</v-btn>
       </v-layout>
     </v-container>
   </div>
@@ -33,21 +34,15 @@ export default {
   &-headline {
     font-size: 28px;
   }
-
-  &-add_btn {
-    cursor: pointer;
-  }
   &-main {
     height: calc(100% - 150px);
     width: 100%;
   }
-  &-idea_action {
-    visibility: hidden;
-  }
-  &-idea_row {
-    &:hover {
-        visibility: visible;
-    }
+  &-contact {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 }
 
