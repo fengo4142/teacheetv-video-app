@@ -19,6 +19,7 @@ export default class StreamUtil {
       });
     } catch (e) {
       console.log(e)
+      this.error = e;
     }
 
     if (!this.stream) {
@@ -29,6 +30,8 @@ export default class StreamUtil {
 
     this.webcamVideoElement.play();
     this.streaming = true;
+    this.error = null;
+
     return new Promise(resolve => {
       // Add event listener to make sure the webcam has been fully initialized.
       this.webcamVideoElement.oncanplay = () => {
@@ -67,7 +70,6 @@ export default class StreamUtil {
       this.webcamVideoElement.srcObject = null;
     }
     this.streaming = false;
-    this.stream.getVideoTracks()[0].stop();
 
     const canvas = document.getElementById(this.canvasId); // get the canvas from the page
     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);    

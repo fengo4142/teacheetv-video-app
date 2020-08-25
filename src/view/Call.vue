@@ -11,7 +11,7 @@
                 <video hidden id="webcam" width="640" height="480"></video>
                 <canvas class="videoFeed" id="canvas" width="640" height="480"></canvas>
             </div>
-            <v-card-title>Camera</v-card-title>
+            <v-card-title>Camera Status: {{ !isPlaying ? 'ON' : 'OFF'}}</v-card-title>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -58,31 +58,31 @@ export default {
   data: () => ({
     comments: [],
     isPlaying: false,
-    stream: null
+    webcam: null,
   }),
 
   methods: {
     toggle() {
       this.isPlaying = !this.isPlaying
       if (this.isPlaying) {
-        this.stream.stop()
+        this.webcam.stop()
       }
       else {
-        this.stream.init()
+        this.webcam.init()
       }
     },
     backToHome() {
-      this.stream.stop()
+      this.webcam.stop()
       this.$router.push('/')
     }
   },
 
   mounted() {
-    this.stream = new StreamUtil("webcam", "canvas");
-    
+    this.webcam = new StreamUtil("webcam", "canvas");
+
     axios.get(COMMENTS_URL).then(response => {
       this.comments = response.data;
-      this.stream.init()
+      this.webcam.init()
     })
   }
 }
